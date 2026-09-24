@@ -1,0 +1,7 @@
+interface:
+  display_name: "Diagnóstico móvil"
+  short_description: "Investiga fallos difíciles de Android e iOS"
+  default_prompt: "Usa $mobile-diagnostics para investigar y corregir este fallo móvil con evidencia."
+
+policy:
+  allow_implicit_invocation: false

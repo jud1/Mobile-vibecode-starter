@@ -1,41 +1,19 @@
-This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
+# Convenciones del repositorio
 
-## Expo has changed — do not trust your training data
+- Lee `README.md` y `PROJECT_STATUS.md` antes de cambios amplios. Mantén una tarea por objetivo.
+- Este proyecto usa Expo SDK 57, Expo Router y TypeScript estricto. Comprueba documentación versionada antes de usar APIs de Expo o React Native.
+- Las rutas viven en `src/app/`; coloca lógica y componentes reutilizables fuera de esa carpeta.
+- Instala módulos de Expo con `npx expo install <paquete>` y conserva `package-lock.json`.
+- `ios/` y `android/` son generados: configura comportamiento nativo en `app.json` o plugins, no edites esas carpetas manualmente.
+- No añadas backend, autenticación, pagos, analítica ni proveedores externos sin un requisito explícito.
+- Guarda logs y resultados extensos en `.artifacts/`; comparte resúmenes breves y sin datos sensibles.
+- No uses subagentes por rutina. Considéralos solo para investigaciones realmente independientes con una ventaja concreta.
+- No fijes modelos ni Fast mode. Aumenta el esfuerzo solo para arquitectura compleja, fallos difíciles, seguridad o revisiones de hitos.
 
-Expo ships breaking changes every SDK release. APIs you remember are likely renamed, moved, or removed. Before writing any code that touches an Expo, EAS, or React Native API:
+## Criterio de finalización
 
-1. Read the major version of the `expo` package in `package.json`.
-2. Fetch the matching versioned docs: `https://docs.expo.dev/versions/v<major>.0.0/`
-3. For anything else, fetch https://docs.expo.dev/llms.txt — an index of all Expo docs with corrections to common LLM misconceptions. Follow its links to the specific page you need; never answer from memory.
-
-## Commands
-
-Use `bunx` instead of `npx` if the project uses bun (`bun.lock` present).
-
-```bash
-npx expo install <package>  # ALWAYS use instead of npm/yarn/pnpm/bun add — resolves SDK-compatible versions
-npx expo start              # start the dev server
-npx expo lint               # lint
-npx tsc --noEmit            # typecheck
-npx expo-doctor             # diagnose dependency and config issues
-npx expo install --fix      # fix incompatible package versions
-```
-
-Run lint and typecheck before declaring any task done.
-
-## Navigation & Routing
-
-- Use **Expo Router** for all navigation. Routes live in `src/app/` — every file there is a screen, `_layout.tsx` files define navigators. Keep non-route code (components, hooks, utils) outside `src/app/`.
-- Import `Link`, `router`, and `useLocalSearchParams` from `expo-router`.
-- Docs: https://docs.expo.dev/router/introduction.md
-
-## Building with EAS
-
-Use EAS to build, sign, and submit the app in the cloud (`eas build`, `eas submit`) and to ship over-the-air updates (`eas update`) — no local Xcode or Android Studio required. Run EAS CLI as `bunx eas-cli <command>` in Bun projects, or `npx eas-cli@latest <command>` otherwise; substitute that for bare `eas` in docs examples.
-Docs: https://docs.expo.dev/eas/index.md
-
-## Rules
-
-- If `ios/` and `android/` directories do not exist, they are generated (Continuous Native Generation). Never create or edit them by hand — configure native behavior in `app.json` and config plugins.
-- Expo Go only includes its bundled native modules. After adding a library with native code, the app needs a development build: `npx expo run:ios|android` locally, or `eas build --profile development`.
-- Prefer recommended Expo modules over third-party libraries, and check your available skills before adding dependencies. Docs: https://docs.expo.dev/versions/latest/index.md
+- El cambio cumple el objetivo sin ampliar el alcance.
+- `npm run validate` pasa; usa `npm run validate:full` para hitos o cambios de configuración/bundling.
+- Prueba solo las plataformas afectadas y declara por separado qué se comprobó en Android, iOS y por validaciones automáticas.
+- Actualiza documentación y `PROJECT_STATUS.md` únicamente cuando cambien comandos, uso, estado verificable o decisiones duraderas.
+- Revisa el diff antes de entregar. Solicita una segunda revisión al cerrar funciones importantes o antes de compartir una versión, no tras cada retoque.

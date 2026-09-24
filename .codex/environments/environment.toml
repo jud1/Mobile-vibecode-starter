@@ -1,0 +1,21 @@
+# Project actions for Codex. They call the same npm commands documented in README.md.
+version = 1
+name = "mobile-vibecode-starter"
+
+[setup]
+script = "npm ci"
+
+[[actions]]
+name = "Iniciar app"
+icon = "run"
+command = "npm start"
+
+[[actions]]
+name = "Validar"
+icon = "run"
+command = "npm run validate"
+
+[[actions]]
+name = "Diagnosticar"
+icon = "run"
+command = "npm run diagnose"

@@ -1,56 +1,70 @@
-# Welcome to your Expo app 👋
+# Mobile Productivity Starter
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Plantilla mínima para iniciar aplicaciones de productividad y automatización en Android y iPhone con Expo, React Native y TypeScript. Incluye navegación funcional, comandos repetibles, documentación para trabajar con o sin Codex y diagnóstico móvil guiado. No incluye backend, autenticación, pagos ni una aplicación de negocio concreta.
 
-## Get started
+## Base técnica
 
-1. Install dependencies
+- Expo SDK 57 (estable), React Native 0.86 y React 19.2.
+- Expo Router para navegación basada en archivos.
+- TypeScript estricto.
+- npm con dependencias fijadas en `package-lock.json`.
+- Continuous Native Generation: `ios/` y `android/` se generan cuando hacen falta y no se versionan.
 
-   ```bash
-   npm install
-   ```
+Requisitos: Node.js 22.13 o superior, npm y, para simuladores o compilaciones locales, Xcode en macOS y/o Android Studio con Android SDK. iOS también requiere CocoaPods; Expo intentará instalarlo si falta. Los scripts detectan las rutas predeterminadas de Android Studio y prefieren JDK 17 en macOS.
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Instalación y primer arranque
 
 ```bash
-npm run reset-project
+npm ci
+npm start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+En la terminal de Expo, pulsa `i` para iOS o `a` para Android. También puedes iniciar directamente:
 
-### Other setup steps
+```bash
+npm run ios
+npm run android
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+En la pantalla inicial toca **Comprobar navegación**. Debe abrirse la pantalla “La navegación funciona”; vuelve con el botón de la pantalla o la cabecera.
 
-## Learn more
+Los scripts usan el puerto 8083 porque en algunos Mac el 8081 ya pertenece a un servicio del sistema. Puedes elegir otro sin editar archivos, por ejemplo: `EXPO_PORT=8090 npm start`.
 
-To learn more about developing your project with Expo, look at the following resources:
+## Comandos
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+| Comando | Uso |
+| --- | --- |
+| `npm start` | Inicia Metro y muestra el menú de Expo. |
+| `npm run ios` | Inicia Expo y abre el simulador iOS. |
+| `npm run android` | Inicia Expo y abre Android. |
+| `npm run validate` | Ejecuta lint, TypeScript y Expo Doctor. |
+| `npm run validate:full` | Añade una exportación de bundles para todas las plataformas. |
+| `npm run diagnose` | Guarda evidencia del entorno en `.artifacts/diagnostics/`. |
+| `npm run ios:dev-build` | Genera, compila e instala un build nativo de desarrollo iOS. |
+| `npm run android:dev-build` | Genera, compila e instala un build nativo de desarrollo Android. |
 
-## Join the community
+Los dos últimos comandos son más lentos y generan `ios/` o `android/`. Úsalos al cerrar una función que dependa de código nativo o cuando Expo Go no sea suficiente. La primera compilación puede descargar herramientas de Gradle o dependencias de Apple.
 
-Join our community of developers creating universal apps.
+Para escoger un destino concreto puedes reenviar argumentos de Expo, por ejemplo `npm run android:dev-build -- --device` o `npm run ios:dev-build -- --device "iPhone 17 Pro"`.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Crear una app desde esta plantilla
+
+1. Copia el repositorio a una carpeta nueva y conserva `package-lock.json`.
+2. Ejecuta `npm ci`.
+3. Cambia `name`, `slug`, `scheme`, `ios.bundleIdentifier` y `android.package` en `app.json`. Los identificadores deben ser únicos y no deben conservar `com.example...` antes de distribuir la app.
+4. Reemplaza las pantallas de ejemplo bajo `src/app/` y añade componentes fuera de esa carpeta.
+5. Ejecuta `npm run validate` y comprueba la navegación en las plataformas afectadas.
+
+No se ha configurado publicación ni una release para tiendas. Las cuentas, firmas y perfiles de Apple o Google solo serán necesarios cuando decidas distribuir una aplicación real.
+
+## Estructura útil
+
+- `src/app/`: rutas y pantallas.
+- `scripts/`: comandos utilizados tanto por consola como por Codex.
+- `.codex/environments/environment.toml`: Actions visibles de Codex.
+- `.agents/skills/mobile-diagnostics/`: skill explícita `$mobile-diagnostics`.
+- `USER_GUIDE.md`: guía paso a paso para personas con poca experiencia técnica.
+- `PROJECT_STATUS.md`: estado actual y decisiones duraderas.
+- `AGENTS.md`: convenciones breves para agentes de código.
+
+Consulta [USER_GUIDE.md](USER_GUIDE.md) para el flujo cotidiano y [PROJECT_STATUS.md](PROJECT_STATUS.md) para saber qué se ha comprobado realmente.
