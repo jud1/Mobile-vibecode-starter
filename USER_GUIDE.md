@@ -64,8 +64,9 @@ El resultado queda ignorado por Git. Revísalo antes de compartirlo por si conti
 
 ## Probar y entender el resultado
 
-- `npm run validate`: comprobación habitual y rápida.
-- `npm run validate:full`: además comprueba que Expo puede generar los bundles.
+- `npm run validate`: comprobación habitual y rápida; ejecuta lint, TypeScript y tests.
+- `npm run doctor`: comprueba dependencias y configuración de Expo; puede necesitar Internet.
+- `npm run validate:full`: ejecuta todo lo anterior y comprueba que Expo puede generar los bundles de Android, iOS y web.
 - `npm run ios` o `npm run android`: abre la app en un simulador/emulador.
 - `npm run ios:dev-build` o `npm run android:dev-build`: compila e instala código nativo.
 
@@ -98,12 +99,3 @@ Necesito ayuda con este fallo. Intentaba [acción], esperaba [resultado] y ocurr
 ```
 
 Si Codex te pide una acción física, debería indicarte exactamente qué abrir, pulsar o aceptar. Puedes hacer esa acción y responder `listo`; el resto del diagnóstico puede continuar en la misma tarea.
-
-## Cuidar la cuota de ChatGPT Plus
-
-- Un objetivo por tarea; no abras varias tareas para la misma corrección.
-- Deja el modelo y el modo de velocidad en tu configuración normal. No necesitas Fast mode por defecto.
-- Sube el esfuerzo solo para arquitectura difícil, fallos intermitentes, migraciones grandes, seguridad o una revisión importante.
-- No pegues logs enormes: usa `.artifacts/diagnostics/` y comparte el fragmento relevante.
-- Pide revisión al cerrar un hito importante, no tras cada cambio pequeño.
-- Evita agentes paralelos salvo que existan investigaciones independientes y una ventaja concreta.

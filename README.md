@@ -10,7 +10,7 @@ Plantilla mínima para iniciar aplicaciones de productividad y automatización e
 - npm con dependencias fijadas en `package-lock.json`.
 - Continuous Native Generation: `ios/` y `android/` se generan cuando hacen falta y no se versionan.
 
-Requisitos: Node.js 22.13 o superior, npm y, para simuladores o compilaciones locales, Xcode en macOS y/o Android Studio con Android SDK. iOS también requiere CocoaPods; Expo intentará instalarlo si falta. Los scripts detectan las rutas predeterminadas de Android Studio y prefieren JDK 17 en macOS.
+Requisitos: Node.js 22.13 o superior y npm. Para compilaciones locales necesitas Xcode y CocoaPods en macOS y/o Android Studio con Android SDK y un JDK compatible.
 
 ## Instalación y primer arranque
 
@@ -28,7 +28,7 @@ npm run android
 
 En la pantalla inicial toca **Comprobar navegación**. Debe abrirse la pantalla “La navegación funciona”; vuelve con el botón de la pantalla o la cabecera.
 
-Los scripts usan el puerto 8083 porque en algunos Mac el 8081 ya pertenece a un servicio del sistema. Puedes elegir otro sin editar archivos, por ejemplo: `EXPO_PORT=8090 npm start`.
+El arranque intenta usar el puerto estándar 8081 y, si está ocupado, selecciona el siguiente disponible. También puedes elegir uno sin editar archivos, por ejemplo: `npm start -- --port 8083`.
 
 ## Comandos
 
@@ -37,15 +37,17 @@ Los scripts usan el puerto 8083 porque en algunos Mac el 8081 ya pertenece a un 
 | `npm start` | Inicia Metro y muestra el menú de Expo. |
 | `npm run ios` | Inicia Expo y abre el simulador iOS. |
 | `npm run android` | Inicia Expo y abre Android. |
-| `npm run validate` | Ejecuta lint, TypeScript y Expo Doctor. |
-| `npm run validate:full` | Añade una exportación de bundles para todas las plataformas. |
-| `npm run diagnose` | Guarda evidencia del entorno en `.artifacts/diagnostics/`. |
+| `npm test` | Ejecuta la prueba de integración de navegación. |
+| `npm run validate` | Ejecuta lint, TypeScript y tests; es la comprobación cotidiana. |
+| `npm run doctor` | Ejecuta Expo Doctor y conserva sus fallos reales. |
+| `npm run validate:full` | Ejecuta la validación cotidiana, Expo Doctor y exporta bundles de Android, iOS y web. |
+| `npm run diagnose` | En macOS/Linux, guarda evidencia opcional del entorno en `.artifacts/diagnostics/`. |
 | `npm run ios:dev-build` | Genera, compila e instala un build nativo de desarrollo iOS. |
 | `npm run android:dev-build` | Genera, compila e instala un build nativo de desarrollo Android. |
 
 Los dos últimos comandos son más lentos y generan `ios/` o `android/`. Úsalos al cerrar una función que dependa de código nativo o cuando Expo Go no sea suficiente. La primera compilación puede descargar herramientas de Gradle o dependencias de Apple.
 
-Para escoger un destino concreto puedes reenviar argumentos de Expo, por ejemplo `npm run android:dev-build -- --device` o `npm run ios:dev-build -- --device "iPhone 17 Pro"`.
+Los comandos principales son portables y reenvían argumentos de Expo. En macOS, el build Android completa rutas habituales del SDK y JDK cuando no están configuradas. Por ejemplo: `npm run android:dev-build -- --device` o `npm run ios:dev-build -- --device "iPhone 17 Pro"`.
 
 ## Crear una app desde esta plantilla
 
@@ -63,6 +65,8 @@ No se ha configurado publicación ni una release para tiendas. Las cuentas, firm
 - `scripts/`: comandos utilizados tanto por consola como por Codex.
 - `.codex/environments/environment.toml`: Actions visibles de Codex.
 - `.agents/skills/mobile-diagnostics/`: skill explícita `$mobile-diagnostics`.
+- `__tests__/`: pruebas de integración fuera de las rutas de Expo Router.
+- `.github/workflows/validate.yml`: validación rápida y comprobación completa en Linux con Node.js 22.
 - `USER_GUIDE.md`: guía paso a paso para personas con poca experiencia técnica.
 - `PROJECT_STATUS.md`: estado actual y decisiones duraderas.
 - `AGENTS.md`: convenciones breves para agentes de código.
